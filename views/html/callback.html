@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Callback Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/components/jquery/jquery.min.js"></script>
+
+    <script>
+        $(function() {
+            opener.winCallback(this);
+            alert("Parent window callback completed. Closing window.");
+            window.close();
+        });
+    </script>
+</head>
+
+
+<body>
+<h1>Callback Page</h1>
+
+<p>Trigger parent <strong>callback</strong> Javascript.</p>
+
+
+
+</body>
+</html>

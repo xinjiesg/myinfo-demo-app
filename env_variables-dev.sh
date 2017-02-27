@@ -6,6 +6,6 @@ export MYINFO_APP_CLIENT_SECRET=my_client_secret
 export MYINFO_APP_REDIRECT_URL=http://localhost:3001/callback
 export MYINFO_APP_REALM=http://localhost:3001
 
-export MYINFO_API_AUTHORISE='https://myinfo.api.gov.sg/test/v1/authorise'
-export MYINFO_API_TOKEN='https://myinfo.api.gov.sg/test/v1/token'
-export MYINFO_API_PERSON='https://myinfo.api.gov.sg/test/v1/person'
+export MYINFO_API_AUTHORISE=https://myinfo.api.gov.sg/test/v1/authorise
+export MYINFO_API_TOKEN=https://myinfo.api.gov.sg/test/v1/token
+export MYINFO_API_PERSON=https://myinfo.api.gov.sg/test/v1/person

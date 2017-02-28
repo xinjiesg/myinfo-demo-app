@@ -232,7 +232,6 @@ function createPersonRequest (url, uinfin, attributes, clientId, clientSecret, p
 
     // assemble params for Person API
     var strParams = "client_id=" + clientId 
-				+ "&uinfin=" + uinfin
 				+ "&attributes=" + attributes;
     var params = querystring.parse(strParams);
 

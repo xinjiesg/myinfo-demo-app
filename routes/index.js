@@ -86,7 +86,7 @@ router.post('/getPersonData', function(req, res, next) {
 
         if (callErr) {
         	// ERROR
-			console.log("ERROR: " + util.inspect(callErr, false, null));
+			console.log("ERROR: " + JSON.stringify(callErr));
         	res.jsonp({status: "ERROR", msg: callErr});
         } else {
         	// SUCCESSFUL
@@ -139,7 +139,7 @@ function callPersonAPI (accessToken, attributes, clientId, res) {
 
         if (callErr) {
         	// ERROR
-			console.log("ERROR: " + util.inspect(callErr, false, null));
+			console.log("ERROR: " + JSON.stringify(callErr));
         	res.jsonp({status: "ERROR", msg: callErr});
         } else {
         	// SUCCESSFUL
@@ -207,6 +207,10 @@ function createTokenRequest(url, code, redirectUrl, clientId, clientSecret, priv
         // console.log(headers);
     }
     
+	console.log("TOKEN API ###\nurl:"+url);
+	console.log("headers:"+JSON.stringify(headers));
+	console.log("params:"+JSON.stringify(params));
+
     var request = restClient.post(url);
 
     // Set headers
@@ -217,7 +221,7 @@ function createTokenRequest(url, code, redirectUrl, clientId, clientSecret, priv
     if(!_.isUndefined(params) && !_.isEmpty(params))
         request.send(params);
 
-	console.log("request:"+request);
+	//console.log(util.inspect(request, false, null));
 	return request;
 	
 }
@@ -259,6 +263,10 @@ function createPersonRequest (url, uinfin, attributes, clientId, clientSecret, p
         // console.log(headers);
     }
     
+	console.log("PERSON API ###\nurl:"+url);
+	console.log("headers:"+JSON.stringify(headers));
+	console.log("params:"+JSON.stringify(params));
+    
 	// invoke token API
     var request = restClient.get(url);
 
@@ -270,7 +278,6 @@ function createPersonRequest (url, uinfin, attributes, clientId, clientSecret, p
     if(!_.isUndefined(params) && !_.isEmpty(params))
         request.query(params);
 
-	console.log("request:"+request);
 	return request;
 
 }

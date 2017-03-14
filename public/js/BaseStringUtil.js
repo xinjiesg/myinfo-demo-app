@@ -62,15 +62,40 @@ BaseStringGenerator.generateBaseString = function(params) {
     return { value : baseString, sampleRequest: sampleRequest};
 }
 
+BaseStringGenerator.sign = function(baseString, signedBaseStringElement) {
+    if (typeof $ != "undefined") {
+        $.ajax({
+            url: "http://localhost:3001/signBaseString",
+            data: {
+                baseString: baseString
+            },
+            type: "POST", // get from serverside
+            success: function (data) {
+                // successful response from serverside
+                if (data.status == "OK") { // successful
+                    // fill up the application form
+                    signedBaseStringElement.value=data.signedBaseString;
+                } else {
+                    // error occured
+                    alert("ERROR:"+JSON.stringify(data.msg));
+                }
+            },
+            error: function(req, status, error) {
+                return alert("ERROR:Error signing base String: "+error);
+            }
+        });
+    }
+}
+
 BaseStringGenerator.prettyPrint = function(baseString) {
     baseString = BaseStringGenerator.concat(baseString);
     var baseStringParts = baseString.split("&");
     var prettyPrinted = "";
     for (var part in baseStringParts) {
         if (part > 0) {
-            prettyPrinted += "&";
+            prettyPrinted += "\n&";
         }
-        prettyPrinted += baseStringParts[part] + "\n";
+        prettyPrinted += baseStringParts[part];
     }
 
     return prettyPrinted;

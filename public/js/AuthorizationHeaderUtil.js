@@ -34,9 +34,9 @@ AuthorizationHeaderGenerator.prettyPrint = function(authorizationHeader) {
     var prettyPrinted = "";
     for (var part in authorizationHeaderParts) {
         if (part > 0) {
-            prettyPrinted += ",";
+            prettyPrinted += "\n,";
         }
-        prettyPrinted += authorizationHeaderParts[part] + "\n";
+        prettyPrinted += authorizationHeaderParts[part];
     }
 
     return prettyPrinted;

@@ -9,6 +9,7 @@ const Promise = require('bluebird');
 const _ = require('lodash');
 const querystring = require('querystring');
 const securityHelper = require('../lib/security/security');
+const crypto = require('crypto');
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
@@ -64,6 +65,24 @@ router.get('/getEnv', function(req, res, next) {
 		res.jsonp({status: "ERROR", msg:"client_id not found"});
 	else
 		res.jsonp({status: "OK", clientId: clientId, redirectUrl: redirectUrl, authApiUrl: authApiUrl, attributes: attributes});
+});
+
+router.post('/signBaseString', function(req, res, next) {
+    var baseString = req.body.baseString;
+    console.log("base String"+baseString);
+    var signWith = {
+            key: privateKeyContent
+        };
+
+    try {
+        var signature = crypto.createSign('RSA-SHA256')
+            .update(baseString)
+            .sign(signWith, 'base64');
+
+        res.jsonp({status: "OK", signedBaseString:signature});
+    } catch (error) {
+        console.log(error)
+    }
 });
 
 // function for frontend to call backend

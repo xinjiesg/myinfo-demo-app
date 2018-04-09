@@ -11,11 +11,14 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
     "express": "^4.13.4",
+    "jsonwebtoken": "7.3.0",
     "lodash": "^4.17.2",
     "morgan": "~1.7.0",
     "nonce": "^1.0.4",
+    "pug": "^2.0.0-rc.4",
     "querystring": "^0.2.0",
     "serve-favicon": "~2.3.0",
+    "superagent": "^3.1.0",
     "superagent-bluebird-promise": "^4.1.0"
   },
   "devDependencies": {

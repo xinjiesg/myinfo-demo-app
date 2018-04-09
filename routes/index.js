@@ -275,7 +275,9 @@ function createPersonRequest(uinfin, validToken) {
     _.set(headers, "Authorization", "Bearer " + validToken);
   }
 
-  // invoke token API
+  console.log("\x1b[32m", "Request Header for Person API:", "\x1b[0m");
+  console.log(JSON.stringify(headers));
+  // invoke person API
   var request = restClient.get(url);
 
   // Set headers

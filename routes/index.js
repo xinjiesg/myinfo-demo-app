@@ -149,19 +149,19 @@ function callPersonAPI(accessToken, res) {
           body: callRes.body,
           text: callRes.text
         };
-        var personJWS = data.text;
-        if (personJWS == undefined || personJWS == null) {
+        var personJWE = data.text;
+        if (personJWE == undefined || personJWE == null) {
           res.jsonp({
             status: "ERROR",
             msg: "PERSON DATA NOT FOUND"
           });
         } else {
-          console.log("\x1b[32m", "Person Data (JWS):", "\x1b[0m");
-          console.log(personJWS);
+          console.log("\x1b[32m", "Person Data (JWE):", "\x1b[0m");
+          console.log(personJWE);
 
-          var personData = personJWS;
-          // verify signature & decode JWS to get the JSON
-          personData = securityHelper.verifyJWS(personJWS, _publicCertContent);
+          var personData = personJWE;
+          // Decrypt JWE to get the JSON
+          personData = securityHelper.decryptJWE(personJWS, _privateKeyContent);
           if (personData == undefined || personData == null)
             res.jsonp({
               status: "ERROR",

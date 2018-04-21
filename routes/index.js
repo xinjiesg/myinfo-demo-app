@@ -156,13 +156,22 @@ function callPersonAPI(accessToken, res) {
             msg: "PERSON DATA NOT FOUND"
           });
         } else {
-          console.log("\x1b[32m", "Person Data (JWE):", "\x1b[0m");
-          console.log(personData);
 
-
-          // header.encryptedKey.iv.ciphertext.tag
-          var jweParts = personData.split(".");
-          var personData = securityHelper.decryptJWE(jweParts[0], jweParts[1], jweParts[2], jweParts[3], jweParts[4], _privateKeyContent);
+          if (_authLevel == "L0") {
+            console.log("\x1b[32m", "Person Data (JWS):", "\x1b[0m");
+            console.log(personData);
+            personData = securityHelper.verifyJWS(personData, _publicCertContent);
+          }
+          else if (_authLevel == "L2") {
+            console.log("\x1b[32m", "Person Data (JWE):", "\x1b[0m");
+            console.log(personData);
+            // header.encryptedKey.iv.ciphertext.tag
+            var jweParts = personData.split(".");
+            personData = securityHelper.decryptJWE(jweParts[0], jweParts[1], jweParts[2], jweParts[3], jweParts[4], _privateKeyContent);
+          }
+          else {
+            throw new Error("Unknown Auth Level");
+          }
 
           if (personData == undefined || personData == null)
             res.jsonp({

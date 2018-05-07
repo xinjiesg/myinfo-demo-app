@@ -162,35 +162,60 @@ function callPersonAPI(accessToken, res) {
             console.log("Person Data (JWS):".green);
             console.log(personData);
             personData = securityHelper.verifyJWS(personData, _publicCertContent);
+
+            if (personData == undefined || personData == null) {
+              res.jsonp({
+                status: "ERROR",
+                msg: "INVALID DATA OR SIGNATURE FOR PERSON DATA"
+              });
+            }
+            personData.uinfin = uinfin; // add the uinfin into the data to display on screen
+
+            console.log("Person Data (Decoded):".green);
+            console.log(JSON.stringify(personData));
+            // successful. return data back to frontend
+            res.jsonp({
+              status: "OK",
+              text: personData
+            });
+            
           }
           else if (_authLevel == "L2") {
             console.log("Person Data (JWE):".green);
             console.log(personData);
             // header.encryptedKey.iv.ciphertext.tag
             var jweParts = personData.split(".");
-            personData = securityHelper.decryptJWE(jweParts[0], jweParts[1], jweParts[2], jweParts[3], jweParts[4], _privateKeyContent);
+            // personData = securityHelper.decryptJWE(jweParts[0], jweParts[1], jweParts[2], jweParts[3], jweParts[4], _privateKeyContent);
+            securityHelper.decryptJWE(jweParts[0], jweParts[1], jweParts[2], jweParts[3], jweParts[4], _privateKeyContent)
+              .then(personData => {
+                if (personData == undefined || personData == null) {
+                  res.jsonp({
+                    status: "ERROR",
+                    msg: "INVALID DATA OR SIGNATURE FOR PERSON DATA"
+                  });
+                }
+                personData.uinfin = uinfin; // add the uinfin into the data to display on screen
+
+                console.log("Person Data (Decoded):".green);
+                console.log(JSON.stringify(personData));
+                // successful. return data back to frontend
+                res.jsonp({
+                  status: "OK",
+                  text: personData
+                });
+
+              })
+              .catch(error => {
+                console.error("Error with decrypting JWE: %s".red, error);
+              })
           }
           else {
             throw new Error("Unknown Auth Level");
           }
 
-          if (personData == undefined || personData == null)
-            res.jsonp({
-              status: "ERROR",
-              msg: "INVALID DATA OR SIGNATURE FOR PERSON DATA"
-            });
-          personData.uinfin = uinfin; // add the uinfin into the data to display on screen
-
-          console.log("Person Data (Decoded):".green);
-          console.log(JSON.stringify(personData));
-          // successful. return data back to frontend
-          res.jsonp({
-            status: "OK",
-            text: personData
-          });
-        }
+        } // end else
       }
-    });
+    }); //end asynchronous call
 }
 
 // function to prepare request for TOKEN API

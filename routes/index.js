@@ -39,7 +39,7 @@ var _authApiUrl = process.env.MYINFO_API_AUTHORISE;
 var _tokenApiUrl = process.env.MYINFO_API_TOKEN;
 var _personApiUrl = process.env.MYINFO_API_PERSON;
 
-var _attributes = "name,sex,race,nationality,dob,email,mobileno,regadd,housingtype,hdbtype,marital,edulevel,assessableincome";
+var _attributes = "name,sex,race,nationality,dob,email,mobileno,regadd,housingtype,hdbtype,marital,edulevel,assessableincome,ownerprivate,assessyear,cpfcontributions,cpfbalances";
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -178,14 +178,13 @@ function callPersonAPI(accessToken, res) {
               status: "OK",
               text: personData
             });
-            
+
           }
           else if (_authLevel == "L2") {
             console.log("Person Data (JWE):".green);
             console.log(personData);
-            // header.encryptedKey.iv.ciphertext.tag
-            var jweParts = personData.split(".");
-            // personData = securityHelper.decryptJWE(jweParts[0], jweParts[1], jweParts[2], jweParts[3], jweParts[4], _privateKeyContent);
+
+            var jweParts = personData.split("."); // header.encryptedKey.iv.ciphertext.tag
             securityHelper.decryptJWE(jweParts[0], jweParts[1], jweParts[2], jweParts[3], jweParts[4], _privateKeyContent)
               .then(personData => {
                 if (personData == undefined || personData == null) {

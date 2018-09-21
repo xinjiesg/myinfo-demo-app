@@ -1,6 +1,6 @@
 ## MyInfo Demo App Setup
 
-##### 1.1 Install Node and NPM
+### 1.1 Install Node and NPM
 
 In order for the demo application to run, you will need to install Node and NPM.
 
@@ -11,16 +11,17 @@ Follow the instructions given by the links below depending on your OS.
 - [nstall Node and NPM for Mac](http://blog.teamtreehouse.com/install-node-js-npm-mac)
 
 
-##### 1.2 Run NPM install
+### 1.2 Run NPM install
 
 Run the following command in the folder you unzipped the application:
 ```
 npm install
 ```
 
-##### 1.3 Start the Application
+### 1.3 Start the Application
 
 **For Linux/MacOS**
+
 Execute the following command to start the application:
 ```
   ./start.sh
@@ -28,11 +29,11 @@ Execute the following command to start the application:
 
 
 **For Windows**
+
 Execute the following command to start the application:
 ```
   .\start.bat
 ```
-
 
 
 **Access the Application on Your Browser**
@@ -56,6 +57,7 @@ Password: ``MyInfo2o15``
 ## Enable PKI Digital Signature
 
 **For Linux/MacOS**
+
 Edit the ``start.sh``. Look for ``L0 APIs``, Comment out these configurations,
 ```
 # L0 APIs
@@ -78,6 +80,7 @@ Execute the following command to start the application:
 ```
 
 **For Windows**
+
 Edit the ``start.bat``. Look for ``L0 APIs``, comment out these configurations,
 ```
 rem L0 APIs
